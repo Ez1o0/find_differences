@@ -2,11 +2,7 @@ import gradio as gr
 import cv2
 import numpy as np
 
-def find_differences(image1_path, image2_path):
-    # 读取图片
-    image1 = cv2.imread(image1_path)
-    image2 = cv2.imread(image2_path)
-
+def find_differences(image1, image2):
     # 转换为灰度图像
     gray1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
     gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
@@ -36,18 +32,14 @@ def find_differences(image1_path, image2_path):
         rect = cv2.minAreaRect(contour)  # 获取最小外接矩形
         box = cv2.boxPoints(rect)  # 计算矩形的四个顶点
         box = np.int32(box)  # 转换为整数
-        cv2.drawContours(image1, [box], 0, (0, 0, 255), 2)  # 用红色标记矩形
+        cv2.drawContours(image1, [box], 0, (255, 0, 0), 2)  # 用红色标记矩形
 
-
-    # 将处理后的图像转换为RGB格式，因为OpenCV使用BGR格式
-    image1 = cv2.cvtColor(image1, cv2.COLOR_BGR2RGB)
-    
     return image1
 
 # 创建Gradio接口
-demo = gr.Interface(
+app = gr.Interface(
     fn=find_differences,
-    inputs=[gr.Image(label="上传图片1", type="filepath"), gr.Image(label="上传图片2", type="filepath")],
+    inputs=[gr.Image(label="上传图片1", image_mode='RGB'), gr.Image(label="上传图片2", image_mode='RGB')],
     outputs=gr.Image(label="处理后的图片"),
     title="查找两种图片的不同",
     description="上传两张图片",
@@ -55,4 +47,4 @@ demo = gr.Interface(
 )
 
 if __name__ == "__main__":
-    demo.launch()
+    app.launch(root_path="/hqb/find_differences", debug=False)
