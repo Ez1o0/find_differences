@@ -11,7 +11,7 @@ def find_differences(image1, image2):
 
     # Check if the number of pixels exceeds your safe threshold
     if num_pixels1 > 89478485 or num_pixels2 > 89478485:
-        gr.Error("图片过大，请压缩后再上传")
+        raise gr.Error("图片过大，请压缩后再上传")
         # gr.Warning("图片过大，将进行压缩")
 
         # # 等比例压缩图片
