@@ -11,24 +11,25 @@ def find_differences(image1, image2):
 
     # Check if the number of pixels exceeds your safe threshold
     if num_pixels1 > 89478485 or num_pixels2 > 89478485:
-        gr.Warning("图片过大，将进行压缩")
+        gr.Error("图片过大，请压缩后再上传")
+        # gr.Warning("图片过大，将进行压缩")
 
-        # 等比例压缩图片
-        scale_factor1 = (89478485 / num_pixels1) ** 0.5
-        width1 = int(image1.shape[1] * scale_factor1)
-        height1 = int(image1.shape[0] * scale_factor1)
-        # 使用 INTER_AREA 方法进行高质量压缩
-        image1 = cv2.resize(image1, (width1, height1), interpolation=cv2.INTER_AREA)
+        # # 等比例压缩图片
+        # scale_factor1 = (89478485 / num_pixels1) ** 0.5
+        # width1 = int(image1.shape[1] * scale_factor1)
+        # height1 = int(image1.shape[0] * scale_factor1)
+        # # 使用 INTER_AREA 方法进行高质量压缩
+        # image1 = cv2.resize(image1, (width1, height1), interpolation=cv2.INTER_AREA)
 
-        # 等比例压缩图片
-        scale_factor2 = (89478485 / num_pixels2) ** 0.5
-        width2 = int(image2.shape[1] * scale_factor2)
-        height2 = int(image2.shape[0] * scale_factor2)
-        # 使用 INTER_AREA 方法进行高质量压缩
-        image2 = cv2.resize(image2, (width2, height2), interpolation=cv2.INTER_AREA)
+        # # 等比例压缩图片
+        # scale_factor2 = (89478485 / num_pixels2) ** 0.5
+        # width2 = int(image2.shape[1] * scale_factor2)
+        # height2 = int(image2.shape[0] * scale_factor2)
+        # # 使用 INTER_AREA 方法进行高质量压缩
+        # image2 = cv2.resize(image2, (width2, height2), interpolation=cv2.INTER_AREA)
 
-        if image1.shape[0] * image1.shape[1] > 89478485 or image2.shape[0] * image2.shape[1] > 89478485:
-            raise gr.Error("图片过大，压缩后仍然超过限制")
+        # if image1.shape[0] * image1.shape[1] > 89478485 or image2.shape[0] * image2.shape[1] > 89478485:
+        #     raise gr.Error("图片过大，压缩后仍然超过限制")
 
     # 转换为灰度图像
     gray1 = cv2.cvtColor(image1, cv2.COLOR_RGB2GRAY)
